@@ -32,10 +32,12 @@ import TriStateCheckbox from "primevue/triStateCheckbox";
 import TabView from "primevue/tabview";
 import TabPanel from "primevue/tabpanel";
 import RadioButton from "primevue/radiobutton";
+import ProgressSpinner from "primevue/progressspinner";
 
 const app = createApp(App);
 app.component("Panel", Panel);
 app.component("RadioButton", RadioButton);
+app.component("ProgressSpinner", ProgressSpinner);
 app.component("Panel", Calendar);
 app.component("Dialog", Dialog);
 app.component("Slider", Slider);

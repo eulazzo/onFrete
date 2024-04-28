@@ -3,7 +3,7 @@ import InputEmail from "../../components/inputs/InputEmail.vue";
 import InputText from "../../components/inputs/InputText.vue";
 import InputPassword from "../../components/inputs/InputPassword.vue";
 import { reactive } from "vue";
-
+ 
 const form = reactive({
   user: {
     email: "",
@@ -14,6 +14,7 @@ const form = reactive({
   pending: false,
   error: false,
 });
+ 
 </script>
 
 <template>

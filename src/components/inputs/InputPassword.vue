@@ -7,11 +7,17 @@
       v-model.trim="content"
       :type="buttonType"
       @input="updateValueAndEmitEvent"
-      :placeholder="placeholder"  style="background:white"  class="border-gray-500 input"
+      :placeholder="placeholder"
+      style="background: white; color: black"
+      class="border-gray-500 input"
     />
     <div class="error-success-icons">
       <button @click.prevent.stop="changeType" class="cursor-pointer">
-        <Icon icon="heroicons-eye" :class="{'replaceTopIcon': isLoginPage}" class="icon passwordIcon cursor-pointer" />
+        <Icon
+          icon="heroicons-eye"
+          :class="{ replaceTopIcon: isLoginPage }"
+          class="icon passwordIcon cursor-pointer"
+        />
       </button>
     </div>
     <span class="error-message">{{ showMessage }}</span>
@@ -133,7 +139,7 @@ export default {
   right: 40px;
   z-index: 100;
 }
-.replaceTopIcon{
+.replaceTopIcon {
   top: 13px;
 }
 .passwordIcon {

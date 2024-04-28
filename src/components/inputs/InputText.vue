@@ -9,7 +9,7 @@
       :error="error"
       type="text"
       :disabled="disabled"
-      style="background: white"
+      style="background: white; color: black"
       class="border-gray-500 input"
     />
     <span class="error-message">{{ showMessage }}</span>

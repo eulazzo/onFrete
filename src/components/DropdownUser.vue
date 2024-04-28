@@ -19,11 +19,14 @@ const currentUser = {
 const form = reactive({
   pending: false,
 })
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 async function onLogoutClick() {
   try {
     form.pending = true
-
+    localStorage.removeItem('user')
+    router.push("/login")
     // await logout()
 
     // await navigateTo('/login')

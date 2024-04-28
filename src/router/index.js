@@ -7,14 +7,9 @@ routes.beforeEach(async (to, from, next) => {
         return;
     }
 
-    // if (!store.getters['Autenticacao/estaAutenticado']) {
-    //     next({ name: 'login', params: { redirect: to?.path }, });
-    //     return;
-    // }
-
-    const paginasQueVaoParaInicio = ['login'];
-    if (paginasQueVaoParaInicio.includes(to.name)) {
-        next({ name: 'dashboard' });
+    const user = localStorage.getItem('user')
+    if (!user) {
+        next({ name: 'login', params: { redirect: to?.path } });
         return;
     }
     next();

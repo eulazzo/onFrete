@@ -9,116 +9,119 @@
       optionLabel="label"
       optionValue="value"
       class="md:w-14rem w-full"
-      @change="updateValueAndEmitEvent"  style="background:white"
+      @change="updateValueAndEmitEvent"
+      style="background: white; color: black"
     />
     <span class="error-message">{{ showMessage }}</span>
   </div>
 </template>
 
 <script>
-import { Icon } from '@iconify/vue'
+import { Icon } from "@iconify/vue";
 export default {
   components: { Icon },
-  name: 'InputPassword',
+  name: "InputPassword",
   props: {
-    value: { type: String, default: '' },
-    selectedCustomer: { type: String, default: '' },
-    placeholder: { type: String, default: '' },
-    message: { type: String, default: '' },
+    value: { type: String, default: "" },
+    selectedCustomer: { type: String, default: "" },
+    placeholder: { type: String, default: "" },
+    message: { type: String, default: "" },
     error: { type: Boolean, default: true },
     required: { type: Boolean },
-    labelInput: { type: String, default: '' },
-    variant: { type: String, default: 'input' },
-    selectValueProp: { type: String, default: '' },
-    Id: { type: String, default: '' },
+    labelInput: { type: String, default: "" },
+    variant: { type: String, default: "input" },
+    selectValueProp: { type: String, default: "" },
+    Id: { type: String, default: "" },
 
     selectOptions: {
       type: Array,
       default: () => {
-        return []
+        return [];
       },
     },
   },
 
   data() {
     return {
-      selectValue: '',
+      selectValue: "",
       isValid: false,
       label: this.labelInput,
-      selectedID: '',
-    }
+      selectedID: "",
+    };
   },
   watch: {
     selectValueProp(value) {
-      this.selectValue = value
-      this.setError()
-      this.setEmit()
+      this.selectValue = value;
+      this.setError();
+      this.setEmit();
     },
     id(newVal) {
-      this.selectedID = newVal
+      this.selectedID = newVal;
     },
   },
 
   computed: {
     setStyle() {
-      if (this.variant) return `input ${this.variant}`
-      return `input`
+      if (this.variant) return `input ${this.variant}`;
+      return `input`;
     },
     showMessage() {
-      this.setError()
-      if (!this.selectValue.length) return
+      this.setError();
+      if (!this.selectValue.length) return;
       return this.validSelectedOption(this.selectValue) === true
-        ? ''
-        : this.validSelectedOption(this.selectValue)
+        ? ""
+        : this.validSelectedOption(this.selectValue);
     },
   },
 
   methods: {
     setEmit() {
-      const isValidName = this.validSelectedOption(this.selectValue)
-      const selectElement = document.getElementById('select')
-      const optionSelected = selectElement.options[selectElement.selectedIndex]
+      const isValidName = this.validSelectedOption(this.selectValue);
+      const selectElement = document.getElementById("select");
+      const optionSelected = selectElement.options[selectElement.selectedIndex];
       const customeridValue = optionSelected
-        ? optionSelected.getAttribute('customerid')
-        : this.customerID
+        ? optionSelected.getAttribute("customerid")
+        : this.customerID;
 
-      this.$emit('isValidSelectedOption', {
+      this.$emit("isValidSelectedOption", {
         isValid: this.isValid,
         customerId: customeridValue,
-      })
-      this.$emit('setInputTextValueAfterPageLoaded', {
+      });
+      this.$emit("setInputTextValueAfterPageLoaded", {
         value: this.selectValue,
         errorMessage: isValidName,
-      })
+      });
     },
     updateValueAndEmitEvent(event) {
-      this.setError()
-      this.$emit('update:modelValue', this.selectValue)
-      const isValidName = this.validSelectedOption(this.selectValue)
-      this.$emit('validation', {
+      this.setError();
+      this.$emit("update:modelValue", this.selectValue);
+      const isValidName = this.validSelectedOption(this.selectValue);
+      this.$emit("validation", {
         value: this.selectValue,
         errorMessage: isValidName,
-      })
-      this.$emit('isValidSelectedOption', {
+      });
+      this.$emit("isValidSelectedOption", {
         isValid: this.isValid,
         value: event.value,
-      })
+      });
     },
 
     setError() {
-      const isValidSelectedOption = this.validSelectedOption(this.selectValue)
-      typeof isValidSelectedOption === 'boolean' ? (this.isValid = true) : (this.isValid = false)
+      const isValidSelectedOption = this.validSelectedOption(this.selectValue);
+      typeof isValidSelectedOption === "boolean"
+        ? (this.isValid = true)
+        : (this.isValid = false);
     },
 
     validSelectedOption(name) {
-      if (!name) return `*${this.selectValue} é obrigatório!`
-      const nameRegex = /^[A-ZÀ-Ú][a-zà-ú]+( [A-ZÀ-Ú][a-zà-ú]+)*$/
-      const isValid = nameRegex.test(name)
-      if (!isValid) return `*${this.selectValue} Inválido`
-      return true
+      if (!name) return `*${this.selectValue} é obrigatório!`;
+      const nameRegex = /^[A-ZÀ-Ú][a-zà-ú]+( [A-ZÀ-Ú][a-zà-ú]+)*$/;
+      const isValid = nameRegex.test(name);
+      if (!isValid) return `*${this.selectValue} Inválido`;
+      return true;
     },
   },
-}
+};
 </script>
 
 <style scoped>

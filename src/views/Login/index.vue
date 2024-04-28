@@ -12,10 +12,33 @@ const form = reactive({
   pending: false,
 });
 
+const email = "admin@gmail.com";
+const password = "password";
 const enabledAccess = computed(() => form.data.email && form.data.password);
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 async function onLoginClick() {
   if (!enabledAccess) return;
+  form.pending = true;
+
+  try {
+    form.error = "";
+    form.pending = true;
+
+    // await login(form.data.email, form.data.password, form.data.rememberMe)
+    if (form.data.email === email && form.data.password === password) {
+      setTimeout(() => {
+        localStorage.setItem("user", JSON.stringify(form.data));
+        router.push("/");
+        form.pending = false;
+      }, 1000);
+    }
+  } catch (error: any) {
+    console.error(error);
+
+    if (error.data.message) form.error = error.data.message;
+  }
 }
 </script>
 
@@ -46,7 +69,7 @@ async function onLoginClick() {
             >
           </div>
         </div>
-        <form class="space-y-4" @submit="onLoginClick">
+        <form class="space-y-4" @submit.prevent.stop="onLoginClick">
           <input-email
             label="Email"
             v-model="form.data.email"
@@ -80,6 +103,16 @@ async function onLoginClick() {
             </router-link>
           </p>
         </form>
+        <div>
+          <ProgressSpinner
+            v-if="form.pending"
+            style="width: 30px; height: 30px"
+            strokeWidth="8"
+            animationDuration=".5s"
+            aria-label="Custom ProgressSpinner"
+            class="relative right-[-8rem] top-[-10rem]"
+          />
+        </div>
       </div>
     </main>
 

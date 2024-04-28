@@ -1,6 +1,8 @@
 <template>
   <div class="container-input">
-    <label class="text-md text-gray-500" :for="labelInput">{{ labelInput }}</label>
+    <label class="text-md text-gray-500" :for="labelInput">{{
+      labelInput
+    }}</label>
     <InputText
       v-model.trim="content"
       type="E-mail"
@@ -9,7 +11,7 @@
       :placeholder="placeholder"
       :error="error"
       :disabled="disabled"
-      style="background:white"
+      style="background: white; color: black"
       class="border-gray-500 input"
     />
     <span class="error-message">{{ showMessage }}</span>
@@ -18,85 +20,88 @@
 
 <script>
 export default {
-  name: 'InputEmail',
+  name: "InputEmail",
   props: {
-    value: { type: String, default: '' },
-    type: { type: String, default: 'text' },
-    placeholder: { type: String, default: '' },
-    message: { type: String, default: '' },
+    value: { type: String, default: "" },
+    type: { type: String, default: "text" },
+    placeholder: { type: String, default: "" },
+    message: { type: String, default: "" },
     error: { type: Boolean, default: true },
     required: { type: Boolean },
-    labelInput: { type: String, default: '' },
-    variant: { type: String, default: 'input' },
-    emailValue: { type: String, default: '' },
+    labelInput: { type: String, default: "" },
+    variant: { type: String, default: "input" },
+    emailValue: { type: String, default: "" },
     disabled: { type: Boolean, default: false },
     showIcon: { type: Boolean, default: false },
   },
 
   data() {
     return {
-      content: '',
+      content: "",
       isValid: false,
       label: this.labelInput,
-      buttonType:this.type
-    }
+      buttonType: this.type,
+    };
   },
 
   watch: {
     emailValue(value) {
-      this.content = value
-      this.setError()
-      this.setEmit()
-    }
+      this.content = value;
+      this.setError();
+      this.setEmit();
+    },
   },
 
   computed: {
     setStyle() {
-      if (this.variant) return `input ${this.variant}`
+      if (this.variant) return `input ${this.variant}`;
 
-      return `input`
+      return `input`;
     },
     showMessage() {
-      this.setError()
-      if (!this.content.length) return
-      return this.validEmail(this.content) === true ? '' : this.validEmail(this.content)
+      this.setError();
+      if (!this.content.length) return;
+      return this.validEmail(this.content) === true
+        ? ""
+        : this.validEmail(this.content);
     },
   },
 
   methods: {
-    
     setEmit() {
-      const isValidEmail = this.validEmail(this.content)
-      this.$emit('isValidEmail', this.isValid)
-      this.$emit('setInputEmailValueAfterPageLoaded', {
+      const isValidEmail = this.validEmail(this.content);
+      this.$emit("isValidEmail", this.isValid);
+      this.$emit("setInputEmailValueAfterPageLoaded", {
         value: this.content,
         errorMessage: isValidEmail,
-      })
+      });
     },
 
     updateValueAndEmitEvent() {
-      this.$emit('update:modelValue', this.content)
-      const errorMessage = this.validEmail(this.content)
-      this.$emit('validation', { value: this.content, errorMessage })
-      this.$emit('isValidEmail', this.isValid)
+      this.$emit("update:modelValue", this.content);
+      const errorMessage = this.validEmail(this.content);
+      this.$emit("validation", { value: this.content, errorMessage });
+      this.$emit("isValidEmail", this.isValid);
     },
 
     setError() {
-      const error = this.validEmail(this.content)
-      typeof error === 'boolean' ? (this.isValid = true) : (this.isValid = false)
+      const error = this.validEmail(this.content);
+      typeof error === "boolean"
+        ? (this.isValid = true)
+        : (this.isValid = false);
     },
 
     validEmail(inputValue) {
-      if (!inputValue) return `*${this.label} é obrigatório!`
+      if (!inputValue) return `*${this.label} é obrigatório!`;
 
-      const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-      const isValid = regexEmail.test(inputValue)
+      const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const isValid = regexEmail.test(inputValue);
 
-      if (!isValid) return `*E-mail  Inválido!`
-      return true
-    }
+      if (!isValid) return `*E-mail  Inválido!`;
+      return true;
+    },
   },
-}
+};
 </script>
 
 <style scoped>
@@ -105,7 +110,7 @@ export default {
   flex-direction: column;
   font-size: 1rem;
   position: relative;
-  color:black;
+  color: black;
 }
 
 .icon-input {
@@ -127,7 +132,7 @@ export default {
   top: 15px;
   right: 40px;
   pointer-events: none;
-  z-index:100;
+  z-index: 100;
 }
 .icon-error {
   color: red;
