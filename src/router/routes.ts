@@ -8,7 +8,12 @@ const routes = [
     component: () => import('../views/Login/index.vue'),
     meta: { requiresAuth: false },
   },
-
+  {
+    path: '/account',
+    name: 'account',
+    component: () => import('../views/Account/index.vue'),
+    meta: { requiresAuth: false },
+  },
   {
     path: '/',
     redirect: '/home',
