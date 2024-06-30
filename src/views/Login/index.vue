@@ -49,7 +49,7 @@ async function onLoginClick() {
         <img src="../../assets/img/logo-login.svg" alt="Logo" />
       </div>
       <span class="primary-text text-center text-primary-text"
-        >Conectando Cargas, Encurtando Distâncias!
+        >Conectando Cargas, encurtando Distâncias!
       </span>
     </header>
     <main class="mx-auto w-full max-w-sm">
